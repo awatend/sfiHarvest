@@ -140,29 +140,7 @@ class vehicle_nav(DynamicActor):
         self.state_array_lat_lon= np.empty((0, 4))  
             
     
-    ''' 
-    def log_state(self):
-        """
-        Append current navigation buffer to nav_log and clear buffer.
-        """
-        print("loging ")
-        if self.state_array_x_y.size == 0:
-            return
-        df = pd.DataFrame(
-            self.state_array_x_y,
-            columns=['x', 'y', 'timestamp']
-        )
-        print("writing to csv file")
-        df.to_csv(
-            self.nav_log_path,
-            mode='a',
-            header=not os.path.exists(self.nav_log_path),
-            index=False
-        )
-        self.state_array_x_y = np.empty((0, 3))
-    
-     
-	'''                 
+                   
     def update_nav_log_path(self):
         start_time=datetime.now(timezone.utc)
         self.nav_log_path = start_time.strftime('%Y-%m-%dT%H-%M-%S%z')
@@ -178,16 +156,9 @@ if __name__ == '__main__':
     import argparse 
     parser = argparse.ArgumentParser()
     parser.add_argument('output_dir', help='Directory to watch for logs')
-    # parser.add_argument(
-    #     '--output_dir',
-    #     help='Directory to store logs (defaults to csv_dir)',
-    #     default=None
-    # )
+  
     args = parser.parse_args()
-    #basee = "D:/Campaigns/Harvest2025/"
-    #data_dir = 
-    #nav_dir  = data_dir + "/navigation_log"
-    #nav_log_filename=nav_dir  
+   
     handler = vehicle_nav(
         output_dir=args.output_dir
     )

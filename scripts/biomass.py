@@ -3,6 +3,8 @@ import time
 from pathlib import Path
 import csv
 
+# Script for converting biomass CSV files in geoJSON
+
 def save_geojson(csv_file, geojson_file):
     # Read CSV and construct GeoJSON
     features = []
