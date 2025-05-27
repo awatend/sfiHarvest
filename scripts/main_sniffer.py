@@ -115,27 +115,6 @@ class vehicle_nav(DynamicActor):
         self.coords_dict[self._id].append(new_coord)
         
     
-    ''' 
-    def log_state(self):
-        """
-        Append current navigation buffer to nav_log and clear buffer.
-        """
-        print("loging ")
-        if self.state_array_x_y.size == 0:
-            return
-        df = pd.DataFrame(
-            self.state_array_x_y,
-            columns=['x', 'y', 'timestamp']
-        )
-        print("writing to csv file")
-        df.to_csv(
-            self.nav_log_path,
-            mode='a',
-            header=not os.path.exists(self.nav_log_path),
-            index=False
-        )
-        self.state_array_x_y = np.empty((0, 3))
-    '''
 
     def log_data(self):
         # More convenient to use the usual names
@@ -147,7 +126,7 @@ class vehicle_nav(DynamicActor):
 
 
         }
-
+        # File to display on ArcGIS
         for name, coors in self.coords_dict.items():
             vehicle_name = name_map.get(name, name.title())
             vehicle_folder = os.path.join(self.output_dir, 'display')
@@ -175,6 +154,7 @@ class vehicle_nav(DynamicActor):
             with open(geojson_path, 'w') as f:
                 json.dump(geojson,f,indent=4)
 
+    # long term storage
     def log_data_storage(self):
         # Construct GeoJSON path per vehicle
         for name, coors in self.coords_dict.items():
@@ -217,20 +197,11 @@ class vehicle_nav(DynamicActor):
 '''
     
 if __name__ == '__main__':
-    # csv_dir and output_dir can be passed as command-line arguments
+    #output_dir should be passed as command-line arguments
     import argparse 
     parser = argparse.ArgumentParser()
     parser.add_argument('output_dir', help='Directory to watch for logs')
-    # parser.add_argument(
-    #     '--output_dir',
-    #     help='Directory to store logs (defaults to csv_dir)',
-    #     default=None
-    # )
     args = parser.parse_args()
-    #basee = "D:/Campaigns/Harvest2025/"
-    #data_dir = 
-    #nav_dir  = data_dir + "/navigation_log"
-    #nav_log_filename=nav_dir  
     handler = vehicle_nav(
         output_dir=args.output_dir
     )
