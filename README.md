@@ -1,2 +1,2 @@
 # sfiHarvest
-data visluaization
+data streaming on ArcGIS online
